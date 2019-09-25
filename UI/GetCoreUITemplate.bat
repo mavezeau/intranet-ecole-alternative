@@ -4,6 +4,6 @@ git rebase
 
 cd coreui-free-bootstrap-admin-template
 
-npm install
+call npm install
 
-npm run serve
+call npm run serve
