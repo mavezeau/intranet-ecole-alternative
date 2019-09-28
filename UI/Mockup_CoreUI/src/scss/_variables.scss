@@ -1,0 +1,12 @@
+// Variable overrides
+// Valeur spécifique pour le site intranet modifiables 
+// Navbar
+$navbar-height: 55px !default;
+$navbar-brand-width: 250px !default;
+// Sidebar
+$sidebar-width: 250px !default;
+$sidebar-padding: 0 !default;
+$sidebar-minimized-width: 50px !default;
+$sidebar-minimized-height: $sidebar-minimized-width !default;
+$sidebar-compact-width: 150px !default;
+$mobile-sidebar-width: 270px !default;
