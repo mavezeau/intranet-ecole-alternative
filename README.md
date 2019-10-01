@@ -1,5 +1,5 @@
-# intranet-ecole-alternatif
-Site intranet open-source pour une école alternatif
+# intranet-ecole-alternative
+Site intranet open-source pour une école alternative
 
 ## Pré-requis:
 
