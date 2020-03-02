@@ -54,6 +54,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -119,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "vscoderemotetryng"
+    }
+  },
+  "defaultProject": "vscoderemotetryng",
+  "cli": {
+    "analytics": "4e7c6e8a-fcb6-4acb-8e07-b63ed239086a"
+  }
 }

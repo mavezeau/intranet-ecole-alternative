@@ -1,0 +1,51 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+      {
+          "label": "Build and Watch",
+          "type": "shell",
+          "command": "npm",
+          "args": [
+              "run",
+              "start-dev"
+          ],
+          "group": {
+              "kind": "build",
+              "isDefault": true
+          },
+          "problemMatcher": [
+              {
+                  "owner": "javascript",
+                  "fileLocation": [
+                      "relative",
+                      "${workspaceFolder}"
+                  ],
+                  "pattern": [
+                      {
+                          "regexp": "(ERROR|WARNING) in (.*\\.js)",
+                          "severity": 1,
+                          "file": 2,
+                      },
+                      {
+                          "regexp": "^.*$",
+                      },
+                      {
+                          "regexp": "(.*)\\s\\((\\d+):(\\d+)\\)",
+                          "message": 1,
+                          "line": 2,
+                          "column": 3
+                      }
+                  ],
+                  "background": {
+                      // Problems are printed after this message.
+                      "beginsPattern": "ng serve --host 0.0.0.0 --disable-host-check",
+                      // Matching Browsersync messaging.
+                      "endsPattern": "Compiled successfully",
+                      "activeOnStart": true
+                  }
+              }
+          ],
+          "isBackground": true,
+      }
+  ]
+}
