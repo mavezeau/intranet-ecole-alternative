@@ -1,0 +1,5 @@
+{
+    "require-dev": {
+        "laracademy/generators": "^2.0"
+    }
+}

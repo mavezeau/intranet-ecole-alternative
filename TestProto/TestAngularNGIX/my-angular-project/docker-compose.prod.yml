@@ -1,0 +1,9 @@
+version: '3'
+services:
+  my-angular-project-dev:
+    command: npm run prod
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - PORT=80
+

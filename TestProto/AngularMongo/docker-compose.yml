@@ -1,0 +1,186 @@
+version: '3.7' # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  angular: # name of the first service
+    privileged: true
+    build: 
+        context: ./angular8tutorial
+        dockerfile: Dockerfile
+    ports:
+      - "4200:4200" # specify port forewarding
+    volumes:
+      - ./angular8tutorial:/app # this will enable changes made to the angular app reflect in the container
+    links:
+      - express
+
+
+  express: #name of the second service
+    #build: express-server # specify the directory of the Dockerfile
+    build:
+      context: ./express-server
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000" #specify ports forewarding
+    volumes:
+      - ./express-server:/app
+    links:
+      - database
+    command: nodemon server.js
+
+  express_mysql: #name of the second service
+    #build: express-server # specify the directory of the Dockerfile
+    build:
+      context: ./express-server-mysql
+      dockerfile: Dockerfile
+    ports:
+      - "4001:4000" #specify ports forewarding
+    volumes:
+      - ./express-server-mysql:/app
+    links:
+      - db_mysql
+    command: nodemon server.js
+    networks:
+      - app-network
+
+  database: # name of the third service
+    image: mongo # specify image to build container from
+    ports:
+      - "27017:27017" # specify port forewarding
+
+  #PHP Service
+  #php:
+  #  build:
+    #   context: ./php
+    #   dockerfile: Dockerfile
+    # image: digitalocean.com/php
+    # #container_name: app
+    # restart: unless-stopped
+    # tty: true
+    # environment:
+    #   SERVICE_NAME: app
+    #   SERVICE_TAGS: dev
+    # volumes:
+    #   - ./php/app-rest/public:/var/www/html
+    #   - ./php/app-rest:/var/www
+    #   - ./php/app-rest/app:/var/www/app
+    #   - ./php/app-rest/logs:/var/www/logs
+    #   - ./php/docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    # networks:
+    #   - app-network
+
+  #Nginx Service
+  # webserver:
+  #   image: nginx:alpine
+  # #  container_name: webserver
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:           
+  #     - ./php/app-rest/public:/var/www/html
+  #     - ./php/app-rest:/var/www
+  #     - ./php/app-rest/app:/var/www/app
+  #     - ./php/app-rest/logs:/var/www/logs
+  #     - ./php/docker/nginx/conf.d/:/etc/nginx/conf.d/
+  #   networks:
+  #     - app-network
+
+  #MySQL Service
+#   db:
+#     image: mysql:5.7.22
+#  #   container_name: db
+#     restart: unless-stopped
+#     tty: true
+#     ports:
+#       - "3306:3306"
+#     environment:
+#       MYSQL_DATABASE: testedb
+#       MYSQL_ROOT_PASSWORD: root
+#       SERVICE_TAGS: dev
+#       SERVICE_NAME: mysql
+#     volumes:
+#       - dbdata:/var/lib/mysql/
+#      # - ./mysql/my.cnf:/etc/mysql/my.cnf
+#     networks:
+#       - app-network
+
+#PHP Service
+  phpNew:
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    image: digitalocean.com/php
+    container_name: phpNew
+    restart: unless-stopped
+    tty: true
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
+      SERVICE_NAME: phpNew
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+       - ./php:/var/www
+       - ./php/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./php:/var/www
+      - ./php/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  #MySQL Service
+  db_mysql:
+    image: mysql:5.7.22
+    #container_name: db_mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: your_mysql_root_password
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./php/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+  # phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - db_mysql
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: db_mysql
+      MYSQL_ROOT_PASSWORD: your_mysql_root_password 
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  logs:
+    driver: local
+  dbdata:
+    driver: local
+  php-data:
+  
