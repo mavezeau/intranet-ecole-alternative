@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  dotnet:
+    container_name: dotnet
+    build:
+      context: DotNetCore
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      -  '.devcontainer/library-scripts:/tmp/library-scripts:rw'
+      - '.:/app'
+    ports:
+      - '5000:5000'
+      - '5001:5001'
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/dbE
+  mongoclient:
+      image: mongoclient/mongoclient:latest
+      environment:
+        MONGO_URL: mongodb://root:rootpassword@mongodb:27017
+      container_name: mongoclient
+      hostname: mongoclient
+      depends_on:
+        - mongodb
+      ports:
+        - 3300:3000
+      
+volumes:
+  mongodb_data_container:  
