@@ -1,13 +1,15 @@
 // If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
 {
-	"name": "Existing Docker Compose (Extend)",
+	"name": "Ouvrir en mode Docker Compose",
 
 	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
 	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
 	"dockerComposeFile": [
-		"..\\docker-compose.yml",
+	//	"..\\docker-compose.yml",
 		"docker-compose.yml"
 	],
+	
+	"runArgs": ["--env-file","devcontainer.env"],
 
 	// The 'service' property is the name of the service for the container that VS Code should
 	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
@@ -24,7 +26,9 @@
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"ms-dotnettools.csharp"
+		"ms-dotnettools.csharp",
+		"eamodio.gitlens",
+		"donjayamanne.githistory"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

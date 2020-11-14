@@ -7,30 +7,9 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/DotNetCore/RestApi.csproj"
+                "${workspaceFolder}/ServerSide/ServerSide.sln"
             ],
-            "problemMatcher": "$tsc"
-        },
-        {
-            "label": "publish",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "publish",
-                "${workspaceFolder}/DotNetCore/RestApi.csproj"
-            ],
-            "problemMatcher": "$tsc"
-        },
-        {
-            "label": "watch",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "watch",
-                "run",
-                "${workspaceFolder}/DotNetCore/RestApi.csproj"
-            ],
-            "problemMatcher": "$tsc"
+            "problemMatcher": "$msCompile"
         }
     ]
 }

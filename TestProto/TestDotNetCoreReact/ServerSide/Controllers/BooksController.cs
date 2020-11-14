@@ -9,9 +9,9 @@ namespace RestApi.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly RestApiService _restApiService;
+        private readonly IMongoService _restApiService;
 
-        public BooksController(RestApiService restApiService)
+        public BooksController(IMongoService restApiService)
         {
             _restApiService = restApiService;
         }

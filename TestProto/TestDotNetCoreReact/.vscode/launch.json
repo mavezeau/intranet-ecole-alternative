@@ -9,16 +9,16 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/DotNetCore/bin/Debug/netcoreapp3.1/RestApi.dll",
+            "program": "${workspaceFolder}/ServerSide/bin/Debug/netcoreapp3.1/RestApi.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/DotNetCore",
+            "cwd": "${workspaceFolder}/ServerSide",
             "console": "internalConsole",
             "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/DotNetCore/Views"
+                "/Views": "${workspaceFolder}/ServerSide/Views"
             }
         }
     ]

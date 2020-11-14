@@ -44,5 +44,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-/TestProto/TestDotNetCoreReact/DotNetCore/bin
-/TestProto/TestDotNetCoreReact/DotNetCore/obj
+/TestProto/TestDotNetCoreReact/ServerSide/bin
+/TestProto/TestDotNetCoreReact/ServerSide/obj
+/TestProto/TestDotNetCoreReact/.devcontainer/devcontainer.env
+/TestProto/TestDotNetCoreReact/.docker/mongodb/data

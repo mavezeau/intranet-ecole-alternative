@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RestApi.Models;
 using RestApi.Services;
+using MongoDB.Driver;
 
 namespace RestApi
 {
@@ -28,16 +29,22 @@ namespace RestApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // requires using Microsoft.Extensions.Options
-            services.Configure<RestApiStoreDatabaseSettings>(
-            Configuration.GetSection(nameof(RestApiStoreDatabaseSettings)));
 
-            services.AddSingleton<IRestApiStoreDatabaseSettings>(sp =>
-              sp.GetRequiredService<IOptions<RestApiStoreDatabaseSettings>>().Value);
-
-            services.AddSingleton<RestApiService>();
+            services.AddScoped<IMongoService,MongoService>();
+            var mongoClient = this.ConnectionMongo();
+            var database = mongoClient.GetDatabase("BookstoreDb");
+            services.AddScoped<IMongoDatabase>(_ => database);
 
             services.AddControllers();
+        }
+
+        private MongoClient ConnectionMongo()
+        {
+            var username =  Environment.GetEnvironmentVariable("MONGO_INITDB_USERNAME");
+            var password = Environment.GetEnvironmentVariable("MONGO_INITDB_PASSWORD");
+            var database_name = Environment.GetEnvironmentVariable("MONGO_INITDB_DATABASE"); 
+            var mongoClient = new MongoClient($"mongodb://{username}:{password}@mongodb:27017/{database_name}");
+            return mongoClient;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,5 +66,7 @@ namespace RestApi
                 endpoints.MapControllers();
             });
         }
+
     }
 }
+    
